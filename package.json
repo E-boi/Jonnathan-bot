@@ -1,0 +1,23 @@
+{
+	"name": "jonnathan-bot",
+	"version": "0.1.0",
+	"description": "a discord bot i made",
+	"main": "src/index.js",
+	"scripts": {
+		"start": "node ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/E-boi/Jonnathan-bot.git"
+	},
+	"author": "",
+	"license": "BSD 3-Clause",
+	"bugs": {
+		"url": "https://github.com/E-boi/Jonnathan-bot/issues"
+	},
+	"homepage": "https://github.com/E-boi/Jonnathan-bot#readme",
+	"dependencies": {
+		"discord.js": "^12.5.3",
+		"mongodb": "^3.6.6"
+	}
+}
