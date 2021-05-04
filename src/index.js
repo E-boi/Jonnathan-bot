@@ -5,7 +5,7 @@ const config = require('../config.json');
 global.config = config;
 
 Client.on('ready', () => {
-	console.log(`%cLogginig in as "${Client.user.username}"`, 'color: #7289da');
+	console.log(`Logging in as "${Client.user.username}"`);
 });
 
 Client.login(config.token);
