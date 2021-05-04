@@ -14,10 +14,11 @@ Then open terminal/cmd in your desired location (do not open cmd as admin in win
 
 ## Config example
 
-Make a file in the root folder named `config.json`. And add your bot token. it should look something like this
+Make a file in the root folder named `config.json`. And add your bot token and prefix. it should look something like this
 
 ```json
 {
+	"prefix": "your prefix",
 	"token": "your bot token"
 }
 ```
