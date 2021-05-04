@@ -2,6 +2,14 @@
 
 - [x] Have a command handler to easily add commands
 
-- [ ] Add a event handler aswell
+- [x] Add a event handler aswell
 
 - [x] Get meme commands in
+
+- [ ] Help command
+
+- [ ] Set up mongodb
+
+- [ ] Per guild prefixes
+
+- [ ] Add mod commands (kick, ban, warn?)
