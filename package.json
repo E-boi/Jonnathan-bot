@@ -18,6 +18,7 @@
 	"homepage": "https://github.com/E-boi/Jonnathan-bot#readme",
 	"dependencies": {
 		"discord.js": "^12.5.3",
-		"mongodb": "^3.6.6"
+		"mongodb": "^3.6.6",
+		"node-fetch": "^2.6.1"
 	}
 }
