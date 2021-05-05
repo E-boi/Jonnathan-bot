@@ -6,7 +6,7 @@
 
 - [x] Get meme commands in
 
-- [ ] Help command
+- [x] Help command
 
 - [ ] Set up mongodb
 

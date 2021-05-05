@@ -5,6 +5,7 @@ module.exports = {
 	name: 'dankmeme',
 	description: 'returns a dankmeme lol',
 	aliases: ['dank'],
+	category: 'fun',
 	execute: async message => {
 		const post = await reddit([
 			'https://www.reddit.com/r/Memes_Of_The_Dank/hot/.json?limit=100',
