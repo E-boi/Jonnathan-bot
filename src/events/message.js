@@ -9,5 +9,6 @@ module.exports = async (client, message) => {
 	if (!command) command = client.commands.get(client.aliases.get(cmd));
 	// if there is no command
 	if (!command) return;
+	if (command.nsfw && !message.channel.nsfw) return message.channel.send('Try this command in a NSFW channel');
 	await command.execute(message, args, client);
 };

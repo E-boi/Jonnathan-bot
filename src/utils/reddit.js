@@ -12,6 +12,7 @@ module.exports = async (url, image = true, link = true, title = true, descriptio
 	if (description) post.title = index.selftext;
 	if (commentsNum) post.comments = index.num_comments;
 	if (upvotes) post.upvotes = index.ups;
+	if (index.thumbnail === 'NSFW' || index.over_18) post.nsfw = true;
 	delete post.url;
 	return post;
 };

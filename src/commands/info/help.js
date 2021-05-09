@@ -17,6 +17,8 @@ module.exports = {
 \`${config.prefix}help info\`
 **Fun:** 
 \`${config.prefix}help fun\`
+**NSFW:** 
+\`${config.prefix}help NSFW\`
 **Prefix:** 
 \`\`\`${config.prefix}\`\`\` 
 			`,
