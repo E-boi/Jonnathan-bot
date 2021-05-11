@@ -1,13 +1,12 @@
-const { readdirSync } = require('fs');
+import { readdirSync } from 'fs';
 
-module.exports = client => {
+export default async client => {
 	const loadedEvent = [];
-	readdirSync('./src/events/').forEach(f => {
+	readdirSync('./src/events/').forEach(async f => {
 		if (!f.endsWith('.js')) return;
-		const evt = require(`../events/${f}`);
+		const evt = await import(`../events/${f}`);
 		const evtName = f.split('.')[0];
-		loadedEvent.push(evtName);
-		client.on(evtName, evt.bind(null, client));
+		client.on(evtName, evt.default.bind(null, client));
+		console.log(`loaded ${evtName}`);
 	});
-	console.log(`Loaded events: ${loadedEvent.join(', ')}`);
 };

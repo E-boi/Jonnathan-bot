@@ -1,7 +1,7 @@
-const { MessageEmbed } = require('discord.js');
-const reddit = require('../../utils/reddit');
+import { MessageEmbed } from 'discord.js';
+import reddit from '../../utils/reddit.js';
 
-module.exports = {
+export default {
 	name: 'cursed',
 	description: 'returns a cursed image lol',
 	nsfw: true,

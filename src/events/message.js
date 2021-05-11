@@ -1,6 +1,6 @@
 const prefix = config.prefix;
 
-module.exports = async (client, message) => {
+export default async (client, message) => {
 	if (!message.content.startsWith(prefix)) return;
 	const args = message.content.slice(prefix.length).split(/ +/g);
 	const cmd = args.shift().toLowerCase();

@@ -1,6 +1,6 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
-module.exports = async (url, image = true, link = true, title = true, description = false, commentsNum = true, upvotes = true) => {
+export default async (url, image = true, link = true, title = true, description = false, commentsNum = true, upvotes = true) => {
 	const post = { url };
 	if (Array.isArray(url)) post.url = url[Math.floor(Math.random() * url.length)];
 	const res = await fetch(post.url);
