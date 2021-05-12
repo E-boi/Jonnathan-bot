@@ -1,7 +1,6 @@
 import { readdirSync } from 'fs';
 
 export default async client => {
-	const loadedEvent = [];
 	readdirSync('./src/events/').forEach(async f => {
 		if (!f.endsWith('.js')) return;
 		const evt = await import(`../events/${f}`);

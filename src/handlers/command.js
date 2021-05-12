@@ -8,12 +8,12 @@ export default client => {
 			commands.forEach(async (f, idx) => {
 				const command = await import(`../commands/${dir}/${f}`);
 
-				if (command.default.name) client.commands.set(command.default.name, command.default);
+				if (command.name) client.commands.set(command.name, command);
 				else unLoadedCommands.push(`❌ ${f} couldn't load from ${dir}`);
 
-				if (command.default.aliases && Array.isArray(command.default.aliases))
-					command.default.aliases.forEach(alias => {
-						return client.aliases.set(alias, command.default.name);
+				if (command.aliases && Array.isArray(command.aliases))
+					command.aliases.forEach(alias => {
+						return client.aliases.set(alias, command.name);
 					});
 				//console.log(idx);
 				if (idx >= commands.length - 1) reslove();

@@ -10,5 +10,6 @@ Client.categories = readdirSync('./src/commands/');
 
 import('./handlers/command.js').then(file => file.default(Client));
 import('./handlers/event.js').then(file => file.default(Client));
+// import('./utils/mongo.js').then(file => file.connect(Client)); 👀
 
 Client.login(config.token);
