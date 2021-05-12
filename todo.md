@@ -8,8 +8,8 @@
 
 - [x] Help command
 
-- [ ] Set up mongodb
+- [x] Set up mongodb
 
-- [ ] Per guild prefixes
+- [x] Per guild prefixes
 
 - [ ] Add mod commands (kick, ban, warn?)

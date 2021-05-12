@@ -1,10 +1,12 @@
 import { MessageEmbed } from 'discord.js';
+import { guildPrefixes } from '../../utils/getAllPrefixes.js';
 
 export const name = 'help';
 export const description = 'helps the user';
 export const category = 'info';
 
 export async function execute(message, args, client) {
+	const prefix = guildPrefixes[message.guild.id];
 	let command = client.commands.get(args[0]);
 	if (!command) command = client.commands.get(client.aliases.get(args[0]));
 	if (!args[0]) {
@@ -13,15 +15,20 @@ export async function execute(message, args, client) {
 			.setDescription(
 				`**Commands**
 **Info:** 
-\`${config.prefix}help info\`
+\`${prefix}help info\`
 **Fun:** 
-\`${config.prefix}help fun\`
+\`${prefix}help fun\`
 **NSFW:** 
-\`${config.prefix}help NSFW\`
+\`${prefix}help NSFW\` ${
+					message.member.hasPermission('ADMINISTRATOR')
+						? `
+**Admin:**
+\`${prefix}help admin\``
+						: ''
+				}
 **Prefix:** 
-\`\`\`${config.prefix}\`\`\` 
-			`,
-				false
+\`\`\`${prefix}\`\`\` 
+			`
 			)
 			.setThumbnail(client.user.avatarURL({ dynamic: true }));
 		return message.channel.send(embed);
