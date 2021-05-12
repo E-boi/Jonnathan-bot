@@ -1,0 +1,11 @@
+{
+	"prefix": ">",
+	"token": "bot token here",
+	"mongo": {
+		"uri": "mongodb uri",
+		"db": "bot",
+		"collections": {
+			"guildConfigs": "config"
+		}
+	}
+}
