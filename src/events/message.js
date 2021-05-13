@@ -7,7 +7,7 @@ export default async (client, message) => {
 
 	let command = client.commands.get(cmd);
 	if (!command) command = client.commands.get(client.aliases.get(cmd));
-	// if there is no command
+
 	if (!command) return;
 	if (command.nsfw && !message.channel.nsfw) return message.channel.send('Try this command in a NSFW channel');
 	if (command.ownerOnly && message.member.id !== config.ownerId) return message.channel.send('Only the bot owner can use this command');
