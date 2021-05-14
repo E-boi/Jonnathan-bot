@@ -12,4 +12,4 @@ import('./handlers/command.js').then(file => file.default(Client));
 import('./handlers/event.js').then(file => file.default(Client));
 import('./utils/mongo.js').then(file => file.connect(Client));
 
-Client.login(config.token).then(() => import('./utils/getAllPrefixes.js').then(file => file.getPrefixes(Client)));
+Client.login(config.token).then(() => import('./utils/mongo.js').then(file => file.getPrefixes(Client)));

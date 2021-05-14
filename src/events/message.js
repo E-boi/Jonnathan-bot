@@ -1,4 +1,4 @@
-import { guildPrefixes } from '../utils/getAllPrefixes.js';
+import { guildPrefixes } from '../utils/mongo.js';
 
 export default async (client, message) => {
 	if (!message.content.startsWith(guildPrefixes[message.guild.id])) return;

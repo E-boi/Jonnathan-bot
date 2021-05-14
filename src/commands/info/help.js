@@ -1,5 +1,6 @@
 import { MessageEmbed } from 'discord.js';
-import { guildPrefixes } from '../../utils/getAllPrefixes.js';
+import { guildPrefixes } from '../../utils/mongo.js';
+import { isOwner } from '../../utils/functions.js';
 
 export const name = 'help';
 export const description = 'helps the user';
@@ -25,6 +26,12 @@ export async function execute(message, args, client) {
 **Admin:**
 \`${prefix}help admin\``
 						: ''
+				} ${
+					message.member.id === config.ownerId
+						? `
+				**Owner Only:**
+				\`${prefix}help owneronly\``
+						: ''
 				}
 **Prefix:** 
 \`\`\`${prefix}\`\`\` 
@@ -33,12 +40,14 @@ export async function execute(message, args, client) {
 			.setThumbnail(client.user.avatarURL({ dynamic: true }));
 		return message.channel.send(embed);
 	} else if (command) {
+		if (command.category === 'owneronly' && !isOwner(message.member)) return message.channel.send("Hmmm looks like you can't view this command");
 		const embed = new MessageEmbed().setColor('RANDOM').setTitle(`**${command.name} Information**`)
 			.setDescription(`**Name:** ${config.prefix}${command.name}
 **Description:** ${command.description}`);
 		if (command.aliases) embed.description += `\n**Aliases:** ${command.aliases.map(a => `${config.prefix}${a}`).join(', ')}`;
 		return message.channel.send(embed);
 	} else if (args[0]) {
+		if (args[0] === 'owneronly' && !isOwner(message.member)) return message.channel.send("Hmmm looks like you can't view this category");
 		const commands = category => {
 			return client.commands
 				.filter(cmd => cmd.category === category)

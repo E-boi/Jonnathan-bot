@@ -1,4 +1,4 @@
-import { guildPrefixes } from '../../utils/getAllPrefixes.js';
+import { guildPrefixes } from '../../utils/mongo.js';
 
 export const name = 'prefix';
 export const description = 'changes the server prefix';
