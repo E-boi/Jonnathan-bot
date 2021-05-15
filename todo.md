@@ -14,6 +14,6 @@
 
 - [ ] Add mod commands (kick, ban, warn?)
 
-- [ ] Add a server info command
+- [x] Add a server info command
 
 - [ ] have admin commands check if user has a "staff" to allow them to do some admin commands

@@ -31,6 +31,7 @@ export async function execute(message, args) {
 			{ name: 'Created at:', value: member.user.createdAt, inline: true },
 			{ name: 'Joined at:', value: member.joinedAt, inline: true },
 		],
+		color: 'RANDOM',
 		author: { iconURL: member.user.avatarURL({ dynamic: true }), name: `Information about: ${member.user.tag}` },
 		thumbnail: { url: member.user.avatarURL({ dynamic: true }) },
 		footer: { iconURL: message.member.user.avatarURL({ dynamic: true }), text: `Requested by: ${message.member.displayName}` },
