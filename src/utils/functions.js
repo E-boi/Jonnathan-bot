@@ -1,3 +1,3 @@
-export function isOwner(member) {
+export function isBotOwner(member) {
 	return member.id === config.ownerId;
 }

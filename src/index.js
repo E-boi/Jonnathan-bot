@@ -1,7 +1,7 @@
-import Discord from 'discord.js';
-const Client = new Discord.Client();
-import { readdirSync, readFileSync } from 'fs';
 const config = JSON.parse(readFileSync('./config.json'));
+import Discord from 'discord.js';
+const Client = new Discord.Client(config.clientOptions);
+import { readdirSync, readFileSync } from 'fs';
 global.config = config;
 
 Client.commands = new Discord.Collection();

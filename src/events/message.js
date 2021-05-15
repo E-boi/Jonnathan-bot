@@ -1,7 +1,8 @@
 import { guildPrefixes } from '../utils/mongo.js';
 
 export default async (client, message) => {
-	if (!message.content.startsWith(guildPrefixes[message.guild.id])) return;
+	if (!message.guild) return;
+	else if (!message.content.startsWith(guildPrefixes[message.guild.id])) return;
 	const args = message.content.slice(guildPrefixes[message.guild.id].length).split(/ +/g);
 	const cmd = args.shift().toLowerCase();
 
