@@ -1,17 +1,17 @@
 import { MessageEmbed } from 'discord.js';
 import reddit from '../../utils/reddit.js';
 
-export const name = 'hentai';
-export const description = 'returns hentai lol';
+export const name = 'porn';
+export const description = 'returns porn lol';
 export const category = 'nsfw';
 export const nsfw = true;
 
 export async function execute(message) {
 	const post = await reddit(
 		[
-			'https://www.reddit.com/r/hentaihaven/hot/.json?limit=100',
-			'https://www.reddit.com/r/hentai_gif/hot/.json?limit=100',
-			'https://www.reddit.com/r/hentai/hot/.json?limit=100',
+			'https://www.reddit.com/r/porn/hot/.json?limit=100',
+			'https://www.reddit.com/r/nsfw/hot/.json?limit=100',
+			'https://www.reddit.com/r/nsfw_gif/hot/.json?limit=100',
 		],
 		true
 	);

@@ -1,20 +1,13 @@
 import { MessageEmbed } from 'discord.js';
 import reddit from '../../utils/reddit.js';
 
-export const name = 'hentai';
-export const description = 'returns hentai lol';
+export const name = 'ecchi';
+export const description = 'returns ecchi lol';
 export const category = 'nsfw';
 export const nsfw = true;
 
 export async function execute(message) {
-	const post = await reddit(
-		[
-			'https://www.reddit.com/r/hentaihaven/hot/.json?limit=100',
-			'https://www.reddit.com/r/hentai_gif/hot/.json?limit=100',
-			'https://www.reddit.com/r/hentai/hot/.json?limit=100',
-		],
-		true
-	);
+	const post = await reddit('https://www.reddit.com/r/ecchi/hot/.json?limit=100', true);
 
 	if (post.image?.includes('redgifs')) {
 		post.description = post.image;
