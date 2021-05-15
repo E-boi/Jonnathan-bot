@@ -33,7 +33,6 @@ export async function reconnect(client) {
 }
 
 export async function getPrefixes(client) {
-	while (!client.mongo.connected) {} // always get prefixs even if it takes a bit
 	if (client.mongo && client.mongo.connected) {
 		for (const guild of client.guilds.cache) {
 			const result = await client.mongo.collection(config.mongo.collections.guildConfigs).findOne({ guildId: guild[0] });
