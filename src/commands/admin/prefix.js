@@ -4,6 +4,7 @@ export const name = 'prefix';
 export const description = 'changes the server prefix';
 export const category = 'admin';
 export const userPerms = ['ADMINISTRATOR'];
+export const staffCanDo = true;
 
 export async function execute(message, args, client) {
 	if (!args[0]) return message.channel.send(`You probably already know but the prefix is ${guildPrefixes[message.guild.id]}`);

@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
 import { guildPrefixes } from '../../utils/mongo.js';
-import { isBotOwner } from '../../utils/functions.js';
+import { isBotOwner, isStaff } from '../../utils/functions.js';
 
 export const name = 'help';
 export const description = 'helps the user';
@@ -21,13 +21,15 @@ export async function execute(message, args, client) {
 \`${prefix}help fun\`
 **NSFW:** 
 \`${prefix}help NSFW\` ${
-					message.member.hasPermission('ADMINISTRATOR')
+					isStaff({ command: { userPerms: null, staffCanDo: true }, member: message.member, guildId: message.guild.id })
 						? `
 **Admin:**
-\`${prefix}help admin\``
+\`${prefix}help admin\`
+**Configurations:**
+\`${prefix}help configurations\``
 						: ''
 				} ${
-					message.member.id === config.ownerId
+					isBotOwner(message.member)
 						? `
 				**Owner Only:**
 				\`${prefix}help owneronly\``
@@ -40,18 +42,28 @@ export async function execute(message, args, client) {
 			.setThumbnail(client.user.avatarURL({ dynamic: true }));
 		return message.channel.send(embed);
 	} else if (command) {
-		if (command.category === 'owneronly' && !isBotOwner(message.member)) return message.channel.send("Hmmm looks like you can't view this command");
+		if (
+			(command.category === 'owneronly' && !isBotOwner(message.member)) ||
+			(command.userPerms && !isStaff({ command, member: message.member, guildId: message.guild.id }))
+		)
+			return message.channel.send("Hmmm looks like you can't view this command");
 		const embed = new MessageEmbed().setColor('RANDOM').setTitle(`**${command.name} Information**`)
 			.setDescription(`**Name:** ${config.prefix}${command.name}
 **Description:** ${command.description}`);
 		if (command.aliases) embed.description += `\n**Aliases:** ${command.aliases.map(a => `${config.prefix}${a}`).join(', ')}`;
 		return message.channel.send(embed);
 	} else if (args[0]) {
-		if (args[0] === 'owneronly' && !isBotOwner(message.member)) return message.channel.send("Hmmm looks like you can't view this category");
+		if (
+			(args[0] === 'owneronly' && !isBotOwner(message.member)) ||
+			(['admin', 'configurations'].includes(args[0]) &&
+				!isStaff({ command: { userPerms: null, canStaffDo: true }, member: message.member, guildId: message.guild.id }))
+		)
+			return message.channel.send("Hmmm looks like you can't view this category");
+
 		const commands = category => {
 			return client.commands
 				.filter(cmd => cmd.category === category)
-				.map(cmd => `- \`${config.prefix}${cmd.name}\``)
+				.map(cmd => `- \`${prefix}${cmd.name}\``)
 				.join('\n');
 		};
 

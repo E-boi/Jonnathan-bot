@@ -1,4 +1,5 @@
 import { guildPrefixes } from '../utils/mongo.js';
+import { isStaff } from '../utils/functions.js';
 
 export default async (client, message) => {
 	if (!message.guild) return;
@@ -12,6 +13,7 @@ export default async (client, message) => {
 	if (!command) return;
 	if (command.nsfw && !message.channel.nsfw) return message.channel.send('Try this command in a NSFW channel');
 	if (command.ownerOnly && message.member.id !== config.ownerId) return message.channel.send('Only the bot owner can use this command');
-	if (command.userPerms && !message.member.hasPermission(command.userPerms)) return message.channel.send("You can't use this command lol");
+	if (command.userPerms && !isStaff({ command, member: message.member, guildId: message.guild.id }))
+		return message.channel.send("You can't use this command lol");
 	await command.execute(message, args, client);
 };

@@ -14,5 +14,5 @@ import('./handlers/event.js').then(file => file.default(Client));
 Client.login(config.token).then(() =>
 	import('./utils/mongo.js')
 		.then(file => file.connect(Client))
-		.then(() => import('./utils/mongo.js').then(file => file.getPrefixes(Client)))
+		.then(() => import('./utils/mongo.js').then(file => file.getConfigs(Client)))
 );
