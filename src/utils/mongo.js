@@ -2,6 +2,7 @@ import pkg from 'mongodb';
 const { MongoClient } = pkg;
 export const guildPrefixes = { dm: config.prefix };
 export const staffRoles = {};
+export const logChannels = {};
 
 export async function connect(client) {
 	try {
@@ -36,10 +37,15 @@ export async function reconnect(client) {
 export async function getConfigs(client) {
 	if (client.mongo && client.mongo.connected) {
 		for (const guild of client.guilds.cache) {
-			const result = await client.mongo.collection(config.mongo.collections.guildConfigs).findOne({ guildId: guild[0] });
-			staffRoles[guild[0]] = result?.staffRole || null;
+			const result = await guildConfigs(client).findOne({ guildId: guild[0] });
+			staffRoles[guild[0]] = result?.staffRole;
+			logChannels[guild[0]] = result?.logchannel;
 			guildPrefixes[guild[0]] = result?.prefix || config.prefix;
 		}
-		console.log('Done getting prefixes and staff roles');
+		console.log('Done getting all guild configs');
 	}
+}
+
+export function guildConfigs(client) {
+	return client.mongo.collection(config.mongo.collections.guildConfigs);
 }
