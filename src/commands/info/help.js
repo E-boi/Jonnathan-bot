@@ -21,7 +21,7 @@ export async function execute(message, args, client) {
 \`${prefix}help fun\`
 **NSFW:** 
 \`${prefix}help NSFW\` ${
-					isStaff({ command: { userPerms: null, staffCanDo: true }, member: message.member, guildId: message.guild?.id || null })
+					isStaff({ command: { userPerms: null, staffCanDo: true }, member: message.member, guildId: message.guild?.id })
 						? `
 **Admin:**
 \`${prefix}help admin\`
@@ -44,7 +44,7 @@ export async function execute(message, args, client) {
 	} else if (command) {
 		if (
 			(command.category === 'owneronly' && !isBotOwner(message.member)) ||
-			(command.userPerms && !isStaff({ command, member: message.member, guildId: message.guild?.id || null }))
+			(command.userPerms && !isStaff({ command, member: message.member, guildId: message.guild?.id }))
 		)
 			return message.channel.send("Hmmm looks like you can't view this command");
 		const embed = new MessageEmbed().setColor('RANDOM').setTitle(`**${command.name} Information**`)

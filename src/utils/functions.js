@@ -5,5 +5,5 @@ export function isBotOwner(member) {
 }
 
 export function isStaff({ command, member, guildId }) {
-	return (command.userPerms && member.hasPermission(command.userPerms)) || (command.staffCanDo && member?.roles.cache.has(staffRoles[guildId]));
+	return (command.userPerms && member?.hasPermission(command.userPerms)) || (command.staffCanDo && member?.roles.cache.has(staffRoles[guildId]));
 }
