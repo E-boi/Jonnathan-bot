@@ -2,7 +2,7 @@ import { guildPrefixes } from '../../utils/mongo.js';
 
 export const name = 'prefix';
 export const description = 'changes the server prefix';
-export const category = 'admin';
+export const category = 'configurations';
 export const userPerms = ['ADMINISTRATOR'];
 export const staffCanDo = true;
 

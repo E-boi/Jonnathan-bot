@@ -12,7 +12,7 @@ export default async (client, message) => {
 	if (!command) return;
 
 	if (message.channel.type === 'dm') {
-		if (['admin', 'configurations', 'owneronly'].includes(command.category)) return message.channel.send("You can't do those commands here");
+		if (['moderation', 'configurations', 'owneronly'].includes(command.category)) return message.channel.send("You can't do those commands here");
 		else if (command.name.includes('serverinfo')) return message.channel.send('Try this in a server');
 		return await command.execute(message, args, client);
 	}
@@ -21,5 +21,6 @@ export default async (client, message) => {
 	if (command.ownerOnly && !isBotOwner(message.member)) return message.channel.send('Only the bot owner can use this command');
 	if (command.userPerms && !isStaff({ command, member: message.member, guildId: message.guild.id }))
 		return message.channel.send("You can't use this command lol");
+	if (command.botPerms && !message.guild.me.hasPermission(command.botPerms)) return message.channel.send("I don't have permissions to do this");
 	await command.execute(message, args, client);
 };

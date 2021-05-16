@@ -23,8 +23,8 @@ export async function execute(message, args, client) {
 \`${prefix}help NSFW\` ${
 					isStaff({ command: { userPerms: null, staffCanDo: true }, member: message.member, guildId: message.guild?.id })
 						? `
-**Admin:**
-\`${prefix}help admin\`
+**Moderation:**
+\`${prefix}help moderation\`
 **Configurations:**
 \`${prefix}help configurations\``
 						: ''
