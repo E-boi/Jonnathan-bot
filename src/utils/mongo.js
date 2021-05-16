@@ -1,6 +1,6 @@
 import pkg from 'mongodb';
 const { MongoClient } = pkg;
-export const guildPrefixes = {};
+export const guildPrefixes = { dm: config.prefix };
 export const staffRoles = {};
 
 export async function connect(client) {

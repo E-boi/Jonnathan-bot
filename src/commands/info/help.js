@@ -7,7 +7,7 @@ export const description = 'helps the user';
 export const category = 'info';
 
 export async function execute(message, args, client) {
-	const prefix = guildPrefixes[message.guild.id];
+	const prefix = guildPrefixes[message.guild?.id || 'dm'];
 	let command = client.commands.get(args[0]);
 	if (!command) command = client.commands.get(client.aliases.get(args[0]));
 	if (!args[0]) {
@@ -21,7 +21,7 @@ export async function execute(message, args, client) {
 \`${prefix}help fun\`
 **NSFW:** 
 \`${prefix}help NSFW\` ${
-					isStaff({ command: { userPerms: null, staffCanDo: true }, member: message.member, guildId: message.guild.id })
+					isStaff({ command: { userPerms: null, staffCanDo: true }, member: message.member, guildId: message.guild?.id || null })
 						? `
 **Admin:**
 \`${prefix}help admin\`
@@ -44,7 +44,7 @@ export async function execute(message, args, client) {
 	} else if (command) {
 		if (
 			(command.category === 'owneronly' && !isBotOwner(message.member)) ||
-			(command.userPerms && !isStaff({ command, member: message.member, guildId: message.guild.id }))
+			(command.userPerms && !isStaff({ command, member: message.member, guildId: message.guild?.id || null }))
 		)
 			return message.channel.send("Hmmm looks like you can't view this command");
 		const embed = new MessageEmbed().setColor('RANDOM').setTitle(`**${command.name} Information**`)
