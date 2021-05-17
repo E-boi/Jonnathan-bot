@@ -1,18 +1,15 @@
 import { MessageEmbed } from 'discord.js';
 import reddit from '../../utils/reddit.js';
 
-export const name = 'meme';
-export const description = 'returns a meme lol';
-export const aliases = ['memes'];
+export const name = 'wholesome';
+export const description = 'returns something wholesome lol';
 export const category = 'fun';
 
 export async function execute(message) {
 	const post = await reddit([
-		'https://www.reddit.com/r/memes/hot/.json?limit=100',
-		'https://www.reddit.com/r/meme/hot/.json?limit=100',
-		'https://www.reddit.com/r/MemeEconomy/hot/.json?limit=100',
-		'https://www.reddit.com/r/HistoryMemes/hot/.json?limit=100',
-		'https://www.reddit.com/r/wholesomememes/hot/.json?limit=100',
+		'https://www.reddit.com/r/wholesome/hot/.json?limit=100',
+		'https://www.reddit.com/r/wholesomegifs/hot/.json?limit=100',
+		'https://www.reddit.com/r/UnexpectedlyWholesome/hot/.json?limit=100',
 	]);
 
 	const embed = new MessageEmbed()
