@@ -9,7 +9,7 @@ export const staffCanDo = true;
 export async function execute(message, args, client) {
 	if (!args[0])
 		return message.channel.send(
-			logChannels[message.guild.id] ? `the current logchannel is ${logChannels[message.guild.id]}` : 'Mention a channel to set a logchannel'
+			logChannels[message.guild.id] ? `the current logchannel is <#${logChannels[message.guild.id]}>` : 'Mention a channel to set a logchannel'
 		);
 
 	const channel = message.mentions.channels.first();
