@@ -49,3 +49,7 @@ export async function getConfigs(client) {
 export function guildConfigs(client) {
 	return client.mongo.collection(config.mongo.collections.guildConfigs);
 }
+
+export function getLog(client) {
+	return client.mongo.collection(config.mongo.collections.warns);
+}

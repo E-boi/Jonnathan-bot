@@ -1,5 +1,5 @@
 import { MessageEmbed } from 'discord.js';
-import { staffRoles } from './mongo.js';
+import { getLog, staffRoles } from './mongo.js';
 
 export function isBotOwner(member) {
 	return member?.id === config.ownerId;
@@ -20,4 +20,21 @@ export function moderationEmbed(member, staff, { name, id }, reason, action) {
 		timestamp: Date.now(),
 		color: '#ff0000',
 	});
+}
+
+export async function addPunish(client, guildId, userId, punishment) {
+	const result = await getLog(client).findOne({ guildId, userId });
+	if (result)
+		await getLog(client).updateOne(
+			{ guildId, userId },
+			{
+				$push: { punishments: punishment },
+			}
+		);
+	else
+		await getLog(client).insertOne({
+			guildId,
+			userId,
+			punishments: [punishment],
+		});
 }

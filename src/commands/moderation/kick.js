@@ -1,5 +1,5 @@
 import { MessageEmbed } from 'discord.js';
-import { moderationEmbed } from '../../utils/functions.js';
+import { addPunish, moderationEmbed } from '../../utils/functions.js';
 import { logChannels } from '../../utils/mongo.js';
 
 export const name = 'kick';
@@ -8,9 +8,10 @@ export const category = 'moderation';
 export const userPerms = ['KICK_MEMBERS'];
 export const botPerms = ['KICK_MEMBERS'];
 
-export async function execute(message, args) {
+export async function execute(message, args, client) {
 	const member = message.mentions.members.first();
-	const reason = args.splice(1).join(' ') || '(none)'; // will be useful once modlogs are setup
+	const reason = args.splice(1).join(' ') || '(none)';
+	let error = false;
 
 	if (!member) return message.channel.send('Mention someone to kick');
 	if (member.id === message.member.id) return message.channel.send("You can't kick yourself");
@@ -21,8 +22,12 @@ export async function execute(message, args) {
 	await member.kick(reason).catch(err => {
 		member.send('You got lucky a error happened');
 		console.log(err);
+		error = true;
 		return message.channel.send('Unlucky a error happened');
 	});
+
+	if (error) return;
+	await addPunish(client, message.guild.id, member.id, { type: 'Banned', by: message.member.id, reason, timestamp: message.createdAt });
 
 	if (logChannels[message.guild.id]) {
 		const channel = message.guild.channels.cache.find(c => c.id === logChannels[message.guild.id]);
