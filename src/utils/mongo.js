@@ -51,5 +51,5 @@ export function guildConfigs(client) {
 }
 
 export function getLog(client) {
-	return client.mongo.collection(config.mongo.collections.warns);
+	return client.mongo.collection(config.mongo.collections.logs);
 }

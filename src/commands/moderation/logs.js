@@ -12,6 +12,7 @@ export async function execute(message, args, client) {
 
 	const member = message.mentions.members.first() || message.guild.members.cache.find(x => x.id === args[0]);
 	if (!member) return message.channel.send("Couldn't find that user");
+	if (member.user.bot) return message.channel.send('Cannot warn a bot');
 
 	const log = await getLog(client).findOne({ guildId: message.guild.id, userId: member.id });
 	if (!log) return message.channel.send('No logs found on that user');
