@@ -47,10 +47,9 @@ export async function execute(message, args, client) {
 			(command.userPerms && !isStaff({ command, member: message.member, guildId: message.guild?.id }))
 		)
 			return message.channel.send("Hmmm looks like you can't view this command");
-		const embed = new MessageEmbed().setColor('RANDOM').setTitle(`**${command.name} Information**`)
-			.setDescription(`**Name:** ${config.prefix}${command.name}
+		const embed = new MessageEmbed().setColor('RANDOM').setTitle(`**${command.name} Information**`).setDescription(`**Name:** ${prefix}${command.name}
 **Description:** ${command.description}`);
-		if (command.aliases) embed.description += `\n**Aliases:** ${command.aliases.map(a => `${config.prefix}${a}`).join(', ')}`;
+		if (command.aliases) embed.description += `\n**Aliases:** ${command.aliases.map(a => `${prefix}${a}`).join(', ')}`;
 		return message.channel.send(embed);
 	} else if (args[0]) {
 		if (

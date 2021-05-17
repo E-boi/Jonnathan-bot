@@ -1,5 +1,5 @@
 export const name = 'game';
-export const description = 'play a lol';
+export const description = 'play a game lol';
 export const category = 'fun';
 
 export async function execute(message) {
