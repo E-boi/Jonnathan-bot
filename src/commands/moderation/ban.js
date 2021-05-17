@@ -1,4 +1,6 @@
+import { MessageEmbed } from 'discord.js';
 import { moderationEmbed } from '../../utils/functions.js';
+import { logChannels } from '../../utils/mongo.js';
 
 export const name = 'ban';
 export const description = 'bans a user';
@@ -21,5 +23,15 @@ export async function execute(message, args) {
 		console.log(err);
 		return message.channel.send('Unlucky a error happened');
 	});
+
+	if (logChannels[message.guild.id]) {
+		const channel = message.guild.channels.cache.find(c => c.id === logChannels[message.guild.id]);
+		if (!channel) return message.channel.send(embed);
+		return channel
+			.send(embed)
+			.then(() => message.channel.send(new MessageEmbed({ description: `${member} has been banned lol` })))
+			.catch(() => message.channel.send(embed));
+	}
+
 	return message.channel.send(embed);
 }
