@@ -7,14 +7,11 @@ export const category = 'nsfw';
 export const nsfw = true;
 
 export async function execute(message) {
-	const post = await reddit(
-		[
-			'https://www.reddit.com/r/porn/hot/.json?limit=100',
-			'https://www.reddit.com/r/nsfw/hot/.json?limit=100',
-			'https://www.reddit.com/r/nsfw_gif/hot/.json?limit=100',
-		],
-		true
-	);
+	const post = await reddit([
+		'https://www.reddit.com/r/porn/hot/.json?limit=100',
+		'https://www.reddit.com/r/nsfw/hot/.json?limit=100',
+		'https://www.reddit.com/r/nsfw_gif/hot/.json?limit=100',
+	]);
 
 	if (post.image?.includes('redgifs')) {
 		post.description = post.image;

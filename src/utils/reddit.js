@@ -1,23 +1,26 @@
 import fetch from 'node-fetch';
 
-export default async (url, description = false, image = true, link = true, title = true, commentsNum = true, upvotes = true) => {
-	const post = { url };
-	if (Array.isArray(url)) post.url = url[Math.floor(Math.random() * url.length)];
-	const res = await fetch(post.url);
+export default async url => {
+	if (Array.isArray(url)) url = url[Math.floor(Math.random() * url.length)];
+	const res = await fetch(url);
 	const json = await res.json();
 	const index = json.data.children[Math.floor(Math.random() * json.data.dist)].data;
-	if (image) post.image = index.url || index.url_overridden_by_dest || index.preview.images[0].source.url.replace('&amp;', '&');
-	if (link) post.link = `https://www.reddit.com${index.permalink}`;
-	if (title) post.title = index.title;
-	if (description) post.description = index.selftext;
-	if (commentsNum) post.comments = index.num_comments;
-	if (upvotes) post.upvotes = index.ups;
-	if (index.thumbnail === 'NSFW' || index.over_18) post.nsfw = true;
-	delete post.url;
+	const post = {
+		title: index.title,
+		description: index.selftext,
+		image: index.url || index.url_overridden_by_dest || index.preview.images[0].source.url.replace('&amp;', '&'),
+		link: `https://www.reddit.com${index.permalink}`,
+		comments: index.num_comments,
+		upvotes: index.ups,
+	};
 
-	if (post.image?.includes('gallery')) {
+	if (index.thumbnail === 'NSFW' || index.over_18) post.nsfw = true;
+	if (post.image?.includes('gallery') || index.image?.includes('https://youtube.com')) {
 		post.description = post.image;
 		post.image = null;
 	}
+	if (post.title?.length > 250) post.title = post.title.slice(0, 248);
+	if (post.description?.length > 2048) post.description = post.description.slice(0, 2046);
+
 	return post;
 };
