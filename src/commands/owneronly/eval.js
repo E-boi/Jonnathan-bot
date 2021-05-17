@@ -1,6 +1,6 @@
 export const ownerOnly = true;
 export const name = 'eval';
-export const description = 'some epik eval command';
+export const description = 'some epic eval command';
 export const category = 'owneronly';
 
 export async function execute(message, args, client) {
