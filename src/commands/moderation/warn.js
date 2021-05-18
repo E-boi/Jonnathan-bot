@@ -13,6 +13,7 @@ export async function execute(message, args, client) {
 	const reason = args.splice(1).join(' ') || '(none)';
 
 	if (!member) return message.channel.send('Mention someone to warn');
+	if (member.user.bot) return message.channel.send('Cannot warn a bot');
 	if (member.id === message.member.id) return message.channel.send("You can't warn yourself");
 
 	const embed = moderationEmbed(member, message.member, message.guild, reason, 'warned');
