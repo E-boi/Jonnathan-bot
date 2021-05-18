@@ -5,7 +5,8 @@
 		"uri": "mongodb uri",
 		"db": "bot",
 		"collections": {
-			"guildConfigs": "config"
+			"guildConfigs": "config",
+			"logs": "logs"
 		}
 	},
 	"clientOptions": {

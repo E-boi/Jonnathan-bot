@@ -16,7 +16,7 @@ Then open terminal/cmd in your desired location (do not open cmd as admin in win
 
 Before we start, sorry for my bad instructions.
 
-Make a file in the root folder named `config.json`. And add your bot token and prefix. Follow this [video](https://youtu.be/358kUe0CKiE?t=16) stop at 2:45. Once you have your connection string replace \<username> with the database username you made and \<password> with the password. Then paste in the connection string in mongo uri. In db you can name it anything. guildConfigs is where the prefix will be stored. the config should look something like the below
+Make a file in the root folder named `config.json`. And add your bot token and prefix. Follow this [video](https://youtu.be/358kUe0CKiE?t=16) stop at 2:45. Once you have your connection string replace \<username> with the database username you made and \<password> with the password. Then paste in the connection string in mongo uri. In db you can name it anything. guildConfigs is where the prefix will be stored and logs is where all the logs will be stored (kicks, bans, warns) and recommand leaving the client options unless you know what where doing. the config should look something like the below
 
 ```json
 {
@@ -26,7 +26,13 @@ Make a file in the root folder named `config.json`. And add your bot token and p
 		"uri": "mongodb uri",
 		"db": "bot",
 		"collections": {
-			"guildConfigs": "config"
+			"guildConfigs": "config",
+			"logs": "logs"
+		},
+	"clientOptions": {
+		"messageSweepInterval": 3600,
+		"ws": {
+			"intents": ["GUILD_PRESENCES", "GUILD_MEMBERS", "GUILDS", "GUILD_EMOJIS", "GUILD_MESSAGES", "GUILD_MEMBERS", "DIRECT_MESSAGES", "GUILD_BANS"]
 		}
 	}
 }
