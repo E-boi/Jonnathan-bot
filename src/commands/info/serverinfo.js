@@ -1,6 +1,4 @@
 import { MessageEmbed } from 'discord.js';
-import { guildPrefixes } from '../../utils/mongo.js';
-import { isBotOwner } from '../../utils/functions.js';
 
 export const name = 'serverinfo';
 export const description = 'information about the server';
