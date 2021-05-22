@@ -54,7 +54,7 @@ export async function execute(message, args, client) {
 	} else if (args[0]) {
 		if (
 			(args[0] === 'owneronly' && !isBotOwner(message.member)) ||
-			(['admin', 'configurations'].includes(args[0]) &&
+			(['moderation', 'configurations'].includes(args[0]) &&
 				!isStaff({ command: { userPerms: null, canStaffDo: true }, member: message.member, guildId: message.guild.id }))
 		)
 			return message.channel.send("Hmmm looks like you can't view this category");

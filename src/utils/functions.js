@@ -6,7 +6,11 @@ export function isBotOwner(member) {
 }
 
 export function isStaff({ command, member, guildId }) {
-	return (command.userPerms && member?.hasPermission(command.userPerms)) || (command.staffCanDo && member?.roles.cache.has(staffRoles[guildId]));
+	return (
+		(command.userPerms && member?.hasPermission(command.userPerms)) ||
+		(command.staffCanDo && member?.roles.cache.has(staffRoles[guildId])) ||
+		member?.hasPermission('ADMINISTRATOR')
+	);
 }
 
 export function moderationEmbed(member, staff, { name, id }, reason, action) {
