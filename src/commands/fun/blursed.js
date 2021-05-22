@@ -3,7 +3,6 @@ import reddit from '../../utils/reddit.js';
 
 export const name = 'blursed';
 export const description = 'returns a blursed image lol';
-export const aliases = ['memes'];
 export const category = 'fun';
 
 export async function execute(message) {
