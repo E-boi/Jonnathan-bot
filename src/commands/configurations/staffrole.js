@@ -8,9 +8,9 @@ export const userPerms = ['ADMINISTRATOR'];
 
 export async function execute(message, args, client) {
 	if (!args[0])
-		return message.channel.send(
-			new MessageEmbed().setDescription(`You may already know this but <@&${staffRoles[message.guild.id]}> is the staff role`)
-		);
+		return staffRoles[message.guild.id]
+			? message.channel.send(new MessageEmbed().setDescription(`You may already know this but <@&${staffRoles[message.guild.id]}> is the staff role`))
+			: message.channel.send('There is no staff role');
 	const role = message.mentions.roles.first() || message.guild.roles.cache.get(args[0]);
 	if (!role) return message.channel.send(`Cannot find role`);
 
