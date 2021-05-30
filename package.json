@@ -18,8 +18,10 @@
 	},
 	"homepage": "https://github.com/E-boi/Jonnathan-bot#readme",
 	"dependencies": {
+		"@top-gg/sdk": "^3.1.1",
 		"dayjs": "^1.10.5",
 		"discord.js": "^12.5.3",
+		"express": "^4.17.1",
 		"mongodb": "^3.6.6",
 		"node-fetch": "^2.6.1"
 	}

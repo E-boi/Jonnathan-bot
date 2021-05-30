@@ -10,6 +10,7 @@ Client.cooldowns = new Map();
 
 import('./handlers/command.js').then(file => file.default(Client));
 import('./handlers/event.js').then(file => file.default(Client));
+if (config.topgg) import('./topgg.js').then(file => file.default(Client));
 
 Client.login(config.token).then(() =>
 	import('./utils/mongo.js')
