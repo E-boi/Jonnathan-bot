@@ -17,6 +17,28 @@ export default async (client, message) => {
 		return await command.execute(message, args, client);
 	}
 
+	if (command.cooldown) {
+		if (message.member.id !== config.ownerId) {
+			if (!client.cooldowns.has(command.name)) client.cooldowns.set(command.name, new Map());
+
+			const cooldown = client.cooldowns.get(command.name);
+			const coollength = command.cooldown * 1000;
+
+			if (cooldown.has(message.member.id)) {
+				const expireTime = cooldown.get(message.member.id) + coollength;
+
+				if (Date.now() < expireTime) {
+					const left = (expireTime - Date.now()) / 1000;
+
+					return message.channel.send(`Wait ${left > 1 ? `${left.toFixed(1)} seconds` : `${left.toFixed(1)} second`}`);
+				}
+			}
+
+			cooldown.set(message.member.id, Date.now());
+			setTimeout(() => cooldown.delete(message.member.id), coollength);
+		}
+	}
+
 	if (command.nsfw && !message.channel.nsfw) return message.channel.send('Try this command in a NSFW channel');
 	if (command.ownerOnly && !isBotOwner(message.member)) return message.channel.send('Only the bot owner can use this command');
 	if (command.userPerms && !isStaff({ command, member: message.member, guildId: message.guild.id }))
