@@ -53,3 +53,7 @@ export function guildConfigs(client) {
 export function getLog(client) {
 	return client.mongo.collection(config.mongo.collections.logs);
 }
+
+export function getMoney(client) {
+	return client.mongo.collection(config.mongo.collections.currency);
+}

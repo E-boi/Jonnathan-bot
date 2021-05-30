@@ -1,5 +1,5 @@
 import { MessageEmbed } from 'discord.js';
-import { getLog, staffRoles } from './mongo.js';
+import { getLog, getMoney, staffRoles } from './mongo.js';
 
 export function isBotOwner(member) {
 	return member?.id === config.ownerId;
@@ -41,4 +41,10 @@ export async function addPunish(client, guildId, userId, punishment) {
 			userId,
 			punishments: [punishment],
 		});
+}
+
+export async function addCoins(client, userId, amount) {
+	const result = await getMoney(client).findOne({ userId });
+	if (result) return await getMoney(client).updateOne({ userId }, { $set: { coins: result.coins + amount } });
+	return await getMoney(client).insertOne({ userId, coins: amount });
 }
