@@ -6,7 +6,8 @@
 		"db": "bot",
 		"collections": {
 			"guildConfigs": "config",
-			"logs": "logs"
+			"logs": "logs",
+			"currency": "currency"
 		}
 	},
 	"clientOptions": {
