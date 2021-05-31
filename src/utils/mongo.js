@@ -57,3 +57,7 @@ export function getLog(client) {
 export function getMoney(client) {
 	return client.mongo.collection(config.mongo.collections.currency);
 }
+
+export function getJobs(client) {
+	return client.mongo.collection(config.mongo.collections.moneymaker);
+}

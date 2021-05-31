@@ -5,7 +5,7 @@ import { MessageEmbed } from 'discord.js';
 dayjs.extend(duration);
 
 export const name = 'daily';
-export const description = 'Flip a coin to earn some coins';
+export const description = 'Earn coins daily';
 export const category = 'currency';
 
 export async function execute(message, _, client) {
