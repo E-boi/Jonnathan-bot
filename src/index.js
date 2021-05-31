@@ -1,7 +1,11 @@
-global.config = JSON.parse(readFileSync('./config.json'));
 import Discord from 'discord.js';
-const Client = new Discord.Client(config.clientOptions);
 import { readdirSync, readFileSync } from 'fs';
+import validate from './validateConfig.js';
+
+global.config = JSON.parse(readFileSync('./config.json'));
+const Client = new Discord.Client(config.clientOptions);
+
+validate();
 
 Client.commands = new Discord.Collection();
 Client.aliases = new Discord.Collection();
