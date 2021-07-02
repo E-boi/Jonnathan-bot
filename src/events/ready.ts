@@ -1,4 +1,4 @@
-import Client from 'src/Client/Client';
+import Client from '../Structures/Client';
 
 export default class ready {
 	client: Client;
