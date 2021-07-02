@@ -7,6 +7,6 @@ export default class ready {
 	}
 
 	run() {
-		console.log(`Logged in as ${this.client.user?.username}`);
+		this.client.logger.log(`Logged in as ${this.client.user?.username}`);
 	}
 }

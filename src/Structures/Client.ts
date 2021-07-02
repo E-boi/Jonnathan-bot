@@ -3,6 +3,7 @@ import pkg from 'mongodb';
 import config from '../../config';
 import { readdir } from 'fs';
 import BaseCommand from './BaseCommand';
+import Logger from './Logger';
 const { MongoClient } = pkg;
 
 export default class Client extends Discord.Client {
@@ -10,12 +11,14 @@ export default class Client extends Discord.Client {
 	public configs: { prefixes: { [key: string]: string } };
 	public commands: Collection<string, BaseCommand>;
 	public aliases: Collection<string, string>;
+	public logger: Logger;
 
 	constructor(options: ClientOptions = {}) {
 		super(options);
 		this.configs = { prefixes: { default: config.prefix } };
 		this.commands = new Collection<string, BaseCommand>();
 		this.aliases = new Collection<string, string>();
+		this.logger = new Logger('client');
 	}
 
 	init() {
@@ -36,7 +39,7 @@ export default class Client extends Discord.Client {
 			const guildConfig = await this.mongo.collection(config.mongo.collections.guildConfigs).findOne({ guildId: guild[0] });
 			this.configs.prefixes[guild[0]] = guildConfig?.prefix || config.prefix;
 		}
-		console.log('Done getting guild prefixes!');
+		this.logger.log('Done getting guild prefixes!');
 	}
 
 	loadCommands() {
