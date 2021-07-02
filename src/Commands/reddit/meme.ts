@@ -1,11 +1,12 @@
-import { MessageReturn } from '../Structures/BaseCommand';
-import RedditCommand from '../Structures/RedditCommand';
+import { MessageReturn } from '../../Structures/BaseCommand';
+import RedditCommand from '../../Structures/RedditCommand';
 
 export default class meme extends RedditCommand {
 	constructor() {
 		super({
 			name: 'meme',
-			description: 'get a meme',
+			aliases: ['memes'],
+			description: 'gets a meme',
 			usage: '{p}meme',
 			reddit: [
 				'https://www.reddit.com/r/memes/hot/.json?limit=100',
@@ -20,6 +21,7 @@ export default class meme extends RedditCommand {
 
 	async makeRun(): Promise<MessageReturn> {
 		const post = await this.getPost();
+		this.logger.log(post.title);
 		return {
 			embed: {
 				title: post.title,
