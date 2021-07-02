@@ -29,7 +29,7 @@ export default class RedditCommand {
 		const post = {
 			title: index.title,
 			description: index.selftext,
-			image: index.url || index.url_overridden_by_dest || index.preview.images[0].source.url.replace('&amp;', '&'),
+			image: index.url_overridden_by_dest || index.preview.images[0].source.url.replace('&amp;', '&'),
 			link: `https://www.reddit.com${index.permalink}`,
 			comments: index.num_comments,
 			upvotes: index.ups,
