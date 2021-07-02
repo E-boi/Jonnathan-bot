@@ -1,5 +1,4 @@
-import { MessageEmbedOptions } from 'discord.js';
-import BaseCommand from '../Structures/BaseCommand';
+import BaseCommand, { MessageReturn } from '../Structures/BaseCommand';
 
 export default class Test extends BaseCommand {
 	constructor() {
@@ -7,7 +6,7 @@ export default class Test extends BaseCommand {
 		this.run = this.makeRun;
 	}
 
-	makeRun(): string | { embed: MessageEmbedOptions } {
+	makeRun(): MessageReturn {
 		return 'This is a test command';
 	}
 }

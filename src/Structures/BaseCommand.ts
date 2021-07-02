@@ -11,8 +11,10 @@ interface CommandProps {
 	aliases?: string[];
 }
 
+export type MessageReturn = string | { embed: MessageEmbedOptions };
+
 export default class BaseCommand {
-	run: (...args: any[]) => string | { embed: MessageEmbedOptions };
+	run: (...args: any[]) => Promise<MessageReturn> | MessageReturn;
 	help: CommandProps;
 	constructor({ name, description, usage, aliases, nsfw }: CommandProps) {
 		this.help = { name, description, usage, aliases, nsfw };
