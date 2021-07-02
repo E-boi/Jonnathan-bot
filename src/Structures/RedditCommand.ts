@@ -1,8 +1,8 @@
 import { PermissionResolvable } from 'discord.js';
 import fetch from 'node-fetch';
-import { MessageReturn } from './BaseCommand';
+import BaseCommand from './BaseCommand';
 
-interface CommandProps {
+interface RedditCommandProps {
 	name: string;
 	description: string;
 	usage: string;
@@ -14,10 +14,10 @@ interface CommandProps {
 	nsfw?: boolean;
 }
 
-export default class RedditCommand {
-	run: (...args: any[]) => Promise<MessageReturn>;
-	help: CommandProps;
-	constructor({ name, description, usage, aliases, nsfw, reddit }: CommandProps) {
+export default class RedditCommand extends BaseCommand {
+	help: RedditCommandProps;
+	constructor({ name, description, usage, aliases, nsfw, reddit }: RedditCommandProps) {
+		super({ name, description, usage, aliases, nsfw });
 		this.help = { name, description, reddit, usage, aliases, nsfw };
 	}
 
@@ -29,7 +29,7 @@ export default class RedditCommand {
 		const post = {
 			title: index.title,
 			description: index.selftext,
-			image: index.url_overridden_by_dest || index.preview.images[0].source.url.replace('&amp;', '&'),
+			image: index.url_overridden_by_dest || index.preview?.images[0].source.url.replace('&amp;', '&'),
 			link: `https://www.reddit.com${index.permalink}`,
 			comments: index.num_comments,
 			upvotes: index.ups,
