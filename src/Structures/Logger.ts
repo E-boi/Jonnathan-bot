@@ -11,7 +11,7 @@ const Colors = {
 };
 
 export default class Logger {
-	prefix: string;
+	private prefix: string;
 
 	constructor(prefix: string) {
 		this.prefix = prefix;
