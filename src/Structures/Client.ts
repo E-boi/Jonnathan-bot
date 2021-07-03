@@ -28,8 +28,9 @@ export default class Client extends Discord.Client {
 	}
 
 	async initMongo() {
-		const client = await MongoClient.connect(config.mongo.uri, { useNewUrlParser: true, useUnifiedTopology: true }).catch(err => {
-			throw new Error(err);
+		const client = await MongoClient.connect(config.mongo.db, { useNewUrlParser: true, useUnifiedTopology: true }).catch(err => {
+			this.logger.warn(err);
+			throw new Error();
 		});
 		this.mongo = client.db(config.mongo.db);
 	}
@@ -44,7 +45,7 @@ export default class Client extends Discord.Client {
 
 	loadCommands() {
 		readdir('./dist/src/Commands', (err, files) => {
-			if (err) return console.log(err);
+			if (err) return this.logger.warn(err.message);
 			files.forEach(async file => {
 				if (file.endsWith('.map')) return;
 				if (!file.endsWith('.js')) return this.loadCommand(file);
@@ -57,7 +58,7 @@ export default class Client extends Discord.Client {
 
 	loadCommand(folder: string) {
 		readdir(`./dist/src/Commands/${folder}`, (err, files) => {
-			if (err) return console.log(err);
+			if (err) return this.logger.warn(err.message);
 			files.forEach(async file => {
 				if (file.endsWith('.map')) return;
 				if (!file.endsWith('.js')) return this.loadCommand(`${folder}/${file}`);
@@ -69,7 +70,7 @@ export default class Client extends Discord.Client {
 
 	loadEvents() {
 		readdir('./dist/src/events', (err, files) => {
-			if (err) return console.log(err);
+			if (err) return this.logger.warn(err.message);
 			files.forEach(async file => {
 				if (file.endsWith('.map')) return;
 				const eventName = file.split('.')[0];
