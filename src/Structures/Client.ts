@@ -28,7 +28,7 @@ export default class Client extends Discord.Client {
 	}
 
 	async initMongo() {
-		const client = await MongoClient.connect(config.mongo.db, { useNewUrlParser: true, useUnifiedTopology: true }).catch(err => {
+		const client = await MongoClient.connect(config.mongo.uri, { useNewUrlParser: true, useUnifiedTopology: true }).catch(err => {
 			this.logger.warn(err);
 			throw new Error();
 		});
