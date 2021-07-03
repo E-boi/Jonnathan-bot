@@ -19,8 +19,8 @@ export default class BaseCommand {
 	run: (...args: any[]) => Promise<MessageReturn> | MessageReturn;
 	help: CommandProps;
 	logger: Logger;
-	constructor({ name, description, usage, aliases, nsfw }: CommandProps) {
-		this.help = { name, description, usage, aliases, nsfw };
+	constructor({ name, description, usage, aliases, nsfw, guildOnly }: CommandProps) {
+		this.help = { name, description, usage, aliases, nsfw, guildOnly };
 		this.logger = new Logger(`command: ${this.help.name}`);
 	}
 }

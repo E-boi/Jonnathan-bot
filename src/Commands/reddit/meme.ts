@@ -21,7 +21,6 @@ export default class meme extends RedditCommand {
 
 	async makeRun(): Promise<MessageReturn> {
 		const post = await this.getPost();
-		this.logger.log(post.title);
 		return {
 			embed: {
 				title: post.title,
