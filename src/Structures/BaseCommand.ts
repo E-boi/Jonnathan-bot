@@ -10,6 +10,7 @@ interface CommandProps {
 	userPerms?: PermissionResolvable[];
 	nsfw?: boolean;
 	aliases?: string[];
+	guildOnly?: boolean;
 }
 
 export type MessageReturn = string | { embed: MessageEmbedOptions };

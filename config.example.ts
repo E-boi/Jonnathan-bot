@@ -1,6 +1,6 @@
 interface Config {
 	prefix: string;
-	ownerId: string | string[];
+	ownerId: string[];
 	token: string;
 	mongo: {
 		uri: string;

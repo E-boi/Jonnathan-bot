@@ -1,3 +1,4 @@
+import config from '../../config';
 import { Message } from 'discord.js';
 import Client from '../Structures/Client';
 
@@ -17,6 +18,7 @@ export default class message {
 		if (!command) return;
 		if (command.help.nsfw && message.channel.type === 'text' && !message.channel.nsfw)
 			return message.channel.send("Can't use nsfw command in a not nsfw channel");
+		else if (command.help.devOnly && config.ownerId.includes(message.author.id)) return message.channel.send("Can't use a dev only command");
 		const res = await command.run(message, args, this.client);
 		return message.channel.send(res);
 	}
