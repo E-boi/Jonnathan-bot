@@ -8,6 +8,7 @@ export default class meme extends RedditCommand {
 			description: 'gets a image',
 			usage: '{p}pics',
 			reddit: 'https://www.reddit.com/r/pics/hot/.json?limit=100',
+			category: 'reddit',
 		});
 		this.run = this.makeRun;
 	}

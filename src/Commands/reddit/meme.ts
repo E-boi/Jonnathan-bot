@@ -15,6 +15,7 @@ export default class meme extends RedditCommand {
 				'https://www.reddit.com/r/HistoryMemes/hot/.json?limit=100',
 				'https://www.reddit.com/r/wholesomememes/hot/.json?limit=100',
 			],
+			category: 'reddit',
 		});
 		this.run = this.makeRun;
 	}

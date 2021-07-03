@@ -9,6 +9,7 @@ export default class meme extends RedditCommand {
 			description: 'gets a dankmeme',
 			usage: '{p}meme',
 			reddit: ['https://www.reddit.com/r/Memes_Of_The_Dank/hot/.json?limit=100', 'https://www.reddit.com/r/dankmemes/hot/.json?limit=100'],
+			category: 'reddit',
 		});
 		this.run = this.makeRun;
 	}

@@ -12,6 +12,7 @@ export default class meme extends RedditCommand {
 				'https://www.reddit.com/r/blessed/hot/.json?limit=100',
 				'https://www.reddit.com/r/Blessed_Images/hot/.json?limit=100',
 			],
+			category: 'reddit',
 		});
 		this.run = this.makeRun;
 	}

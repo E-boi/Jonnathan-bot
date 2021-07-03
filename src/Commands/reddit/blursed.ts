@@ -8,6 +8,7 @@ export default class meme extends RedditCommand {
 			description: 'gets a blursed image',
 			usage: '{p}blursed',
 			reddit: 'https://www.reddit.com/r/blursedimages/hot/.json?limit=100',
+			category: 'reddit',
 		});
 		this.run = this.makeRun;
 	}

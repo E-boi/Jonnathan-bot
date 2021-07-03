@@ -1,10 +1,11 @@
 import { MessageEmbedOptions, PermissionResolvable } from 'discord.js';
 import Logger from './Logger';
 
-interface CommandProps {
+export interface CommandProps {
 	name: string;
 	description: string;
 	usage: string;
+	category: string;
 	devOnly?: boolean;
 	botPerms?: PermissionResolvable[];
 	userPerms?: PermissionResolvable[];
@@ -13,17 +14,19 @@ interface CommandProps {
 	guildOnly?: boolean;
 }
 
-interface helpProps {
+export interface helpProps {
 	name: CommandProps['name'];
 	description: CommandProps['description'];
 	usage: CommandProps['usage'];
+	category: CommandProps['category'];
 	aliases?: CommandProps['aliases'];
 }
 
-interface configProps {
+export interface configProps {
 	nsfw: CommandProps['nsfw'];
-	botPerms: CommandProps['botPerms'];
-	userPerms: CommandProps['userPerms'];
+	category: CommandProps['category'];
+	userPerms?: CommandProps['userPerms'];
+	botPerms?: CommandProps['botPerms'];
 	guildOnly?: CommandProps['guildOnly'];
 	devOnly?: CommandProps['devOnly'];
 }
@@ -35,9 +38,9 @@ export default class BaseCommand {
 	help: helpProps;
 	config: configProps;
 	logger: Logger;
-	constructor({ name, description, usage, aliases, nsfw, guildOnly, botPerms, userPerms, devOnly }: CommandProps) {
-		this.help = { name, description, usage, aliases };
-		this.config = { nsfw, guildOnly, botPerms, userPerms, devOnly };
+	constructor({ name, description, usage, aliases, nsfw, guildOnly, botPerms, userPerms, devOnly, category }: CommandProps) {
+		this.help = { name, description, usage, aliases, category };
+		this.config = { nsfw, guildOnly, botPerms, userPerms, devOnly, category };
 		this.logger = new Logger(`command: ${this.help.name}`);
 	}
 }

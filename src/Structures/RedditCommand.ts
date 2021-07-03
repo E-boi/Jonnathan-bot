@@ -1,28 +1,23 @@
-import { PermissionResolvable } from 'discord.js';
 import fetch from 'node-fetch';
-import BaseCommand from './BaseCommand';
+import BaseCommand, { CommandProps, configProps } from './BaseCommand';
 
-interface RedditCommandProps {
-	name: string;
-	description: string;
-	usage: string;
+interface RedditCommandProps extends CommandProps {
 	reddit: string | string[];
-	aliases?: string[];
-	devOnly?: boolean;
-	botPerms?: PermissionResolvable[];
-	userPerms?: PermissionResolvable[];
-	nsfw?: boolean;
+}
+
+interface RedditConfigProps extends configProps {
+	reddit: string | string[];
 }
 
 export default class RedditCommand extends BaseCommand {
-	help: RedditCommandProps;
-	constructor({ name, description, usage, aliases, nsfw, reddit }: RedditCommandProps) {
-		super({ name, description, usage, aliases, nsfw });
-		this.help = { name, description, reddit, usage, aliases, nsfw };
+	config: RedditConfigProps;
+	constructor({ name, description, usage, aliases, nsfw, guildOnly, botPerms, userPerms, devOnly, category, reddit }: RedditCommandProps) {
+		super({ name, description, usage, aliases, nsfw, guildOnly, botPerms, userPerms, devOnly, category });
+		this.config.reddit = reddit;
 	}
 
 	async getPost() {
-		const url = Array.isArray(this.help.reddit) ? this.help.reddit[Math.floor(Math.random() * this.help.reddit.length)] : this.help.reddit;
+		const url = Array.isArray(this.config.reddit) ? this.config.reddit[Math.floor(Math.random() * this.config.reddit.length)] : this.config.reddit;
 		const res = await fetch(url);
 		const json = await res.json();
 		const index = json.data.children[Math.floor(Math.random() * json.data.dist)].data;
