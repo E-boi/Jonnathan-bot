@@ -9,6 +9,7 @@ export default class message {
 	}
 
 	async run(message: Message) {
+		if (message.author.bot) return;
 		if (!message.content.startsWith(this.client.configs.prefixes[message.guild?.id || 'default'])) return;
 		const args = message.content.slice(this.client.configs.prefixes[message.guild?.id || 'default'].length).split(/ +/g);
 		const cmd = args.shift()?.toLowerCase();
@@ -20,6 +21,7 @@ export default class message {
 		else if (command.config.nsfw && message.channel.type === 'text' && !message.channel.nsfw)
 			return message.channel.send("Can't use nsfw command in a not nsfw channel.");
 		else if (command.config.devOnly && config.ownerId.includes(message.author.id)) return message.channel.send("Can't use a dev only command.");
+		else if (command.config.userPerms && !message.member?.hasPermission(command.config.userPerms)) return message.channel.send("You can't do this!");
 		const res = await command.run(message, args, this.client);
 		return message.channel.send(res);
 	}

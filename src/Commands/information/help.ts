@@ -8,7 +8,7 @@ export default class help extends BaseCommand {
 		this.run = this.makeRun;
 	}
 
-	makeRun({ guild }: Message, args: any[], client: Client): MessageReturn {
+	makeRun({ guild }: Message, args: string[], client: Client): MessageReturn {
 		const categories: string[] = [];
 		client.commands.forEach(
 			command => !categories.includes(command.help.category.toLowerCase()) && categories.push(command.help.category.toLowerCase())
