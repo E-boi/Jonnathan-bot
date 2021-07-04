@@ -48,12 +48,12 @@ export default class help extends BaseCommand {
 			const command = client.commands.get(args[0].toLowerCase()) || client.commands.get(client.aliases.get(args[0].toLowerCase()) || '');
 			const embed: MessageEmbedOptions = {
 				title: command?.help.name,
-				description: `Command: ${client.configs.prefixes[guild?.id || 'default']}${command?.help.name}\nDescription: ${
+				description: `**Command:** ${client.configs.prefixes[guild?.id || 'default']}${command?.help.name}\n**Description:** ${
 					command?.help.description
-				}\nUsage: ${command?.help.usage.replace(/{p}/g, client.configs.prefixes[guild?.id || 'default'])}`,
+				}\n**Usage:** ${command?.help.usage.replace(/{p}/g, client.configs.prefixes[guild?.id || 'default'])}\n**NSFW:** ${!!command?.config.nsfw}`,
 				color: 'RANDOM',
 			};
-			if (command?.help.aliases) embed.description += `\nAliases: ${command.help.aliases.join(', ')}`;
+			if (command?.help.aliases) embed.description += `\n**Aliases:** ${command.help.aliases.join(', ')}`;
 			return { embed };
 		}
 		return 'invailed command/category';
