@@ -31,7 +31,7 @@ export default class prefix extends BaseCommand {
 			.collection(config.mongo.collections.guildConfigs)
 			.updateOne(
 				{ guildId: guild.id },
-				{ $set: { prefix: client.configs.prefixes[guild.id] || client.configs.prefixes['default'], staffRole: args[0] } },
+				{ $set: { prefix: client.configs.prefixes[guild.id] || config.prefix, staffRole: args[0] } },
 				{ upsert: true }
 			);
 		return { embed: { description: `Updated staff role ${role}` } };
