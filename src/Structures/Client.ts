@@ -8,14 +8,14 @@ const { MongoClient } = pkg;
 
 export default class Client extends Discord.Client {
 	public mongo: pkg.Db;
-	public configs: { prefixes: { [key: string]: string } };
+	public configs: { prefixes: { [key: string]: string }; staffroles: { [key: string]: string } };
 	public commands: Collection<string, BaseCommand>;
 	public aliases: Collection<string, string>;
 	public logger: Logger;
 
 	constructor(options: ClientOptions = {}) {
 		super(options);
-		this.configs = { prefixes: { default: config.prefix } };
+		this.configs = { prefixes: { default: config.prefix }, staffroles: {} };
 		this.commands = new Collection<string, BaseCommand>();
 		this.aliases = new Collection<string, string>();
 		this.logger = new Logger('client');
@@ -39,6 +39,7 @@ export default class Client extends Discord.Client {
 		for (const guild of this.guilds.cache) {
 			const guildConfig = await this.mongo.collection(config.mongo.collections.guildConfigs).findOne({ guildId: guild[0] });
 			this.configs.prefixes[guild[0]] = guildConfig?.prefix || config.prefix;
+			this.configs.staffroles[guild[0]] = guildConfig?.staffRole;
 		}
 		this.logger.log('Done getting guild prefixes!');
 	}
