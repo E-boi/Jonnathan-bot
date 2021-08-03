@@ -1,3 +1,3 @@
 # Jonnathan Bot
 
-currently rewriting in typescript (currently in hold until discord.js 13 releases) 
+currently rewriting in typescript (currently rewriting **again** using discord.js 13 dev) 
