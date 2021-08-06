@@ -10,7 +10,7 @@ export default class staffrole extends MongoCommand {
 	}
 
 	async execute({ interaction: { guildId }, args, client }: CommandProps): Promise<CommandReturn> {
-		if (!args[0].role) return 'no role';
+		if (!args[0].role) return { content: 'Invaild role', ephemeral: true };
 		await this.getCollection(Config.mongo.collections.guildConfigs, client).updateOne(
 			{ guildId },
 			{ $set: { staffRole: args[0].role.id } },
