@@ -11,6 +11,7 @@
 		"start": "npm run build && npm run run"
 	},
 	"dependencies": {
+		"chalk": "^4.1.2",
 		"discord.js": "^13.0.0",
 		"mongodb": "^4.1.0",
 		"node-fetch": "^2.6.1",

@@ -1,14 +1,4 @@
-const Colors = {
-	Reset: '\x1b[0m',
-
-	Red: '\x1b[31m',
-	Green: '\x1b[32m',
-	Yellow: '\x1b[33m',
-	Blue: '\x1b[34m',
-	Magenta: '\x1b[35m',
-	Cyan: '\x1b[36m',
-	White: '\x1b[37m',
-};
+import chalk from 'chalk';
 
 export default class Logger {
 	private prefix: string;
@@ -18,14 +8,14 @@ export default class Logger {
 	}
 
 	log(...args: any[]) {
-		console.log(`${Colors.Cyan}[${this.prefix}]${Colors.Reset}`, ...args);
+		console.log(`${chalk.cyan(`[${this.prefix}]`)}`, ...args);
 	}
 
 	warn(...args: any[]) {
-		console.warn(`${Colors.Cyan}[${this.prefix}]${Colors.Reset}${Colors.Red}`, ...args, Colors.Reset);
+		console.warn(`${chalk.cyan(`[${this.prefix}]`)} ${chalk.red(...args)}`);
 	}
 
 	debug(...args: any[]) {
-		console.debug(`${Colors.Cyan}[${this.prefix}]${Colors.Reset}${Colors.Green}`, ...args, Colors.Reset);
+		console.debug(`${chalk.cyan}[${this.prefix}] ${chalk.green(...args)}`);
 	}
 }
