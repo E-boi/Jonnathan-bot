@@ -1,39 +1,21 @@
-import Client from '../../Structures/Client';
-import BaseCommand, { MessageReturn } from '../../Structures/BaseCommand';
-import { Message } from 'discord.js';
-import config from '../../../config';
+import { CommandProps, CommandReturn, MongoCommand } from '../../Structures/Command';
+import Config from '../../../config';
 
-export default class prefix extends BaseCommand {
+export default class staffrole extends MongoCommand {
 	constructor() {
-		super({
-			name: 'staffrole',
-			description: 'set/change the staff role',
-			usage: '{p}staffrole {new staff role/staff role id}',
-			category: 'configurations',
-			userPerms: ['ADMINISTRATOR'],
-			guildOnly: true,
-		});
-		this.run = this.makeRun;
+		super(
+			{ name: 'staffrole', description: 'change/set a staff role', options: [{ name: 'roles', description: 'roles', type: 'ROLE', required: true }] },
+			{ usage: '/staffrole {staff role}', category: 'configurations' }
+		);
 	}
 
-	async makeRun({ guild, mentions }: Message, args: string[], client: Client): Promise<MessageReturn> {
-		if (!args[0])
-			return client.configs.staffroles[guild?.id || '']
-				? { embed: { description: `The current staff role is <@&${client.configs.staffroles[guild?.id || '']}>` } }
-				: 'There is no staff role';
-
-		const role = mentions.roles.first() || guild?.roles.cache.get(args[0]);
-		if (!role) return 'Cannot find role';
-		else if (role.id === client.configs.staffroles[guild?.id || 'default']) return "That's already the staff role!";
-		if (!guild) return 'try in a server';
-		client.configs.staffroles[guild.id] = args[0];
-		await client.mongo
-			.collection(config.mongo.collections.guildConfigs)
-			.updateOne(
-				{ guildId: guild.id },
-				{ $set: { prefix: client.configs.prefixes[guild.id] || config.prefix, staffRole: args[0] } },
-				{ upsert: true }
-			);
-		return { embed: { description: `Updated staff role ${role}` } };
+	async execute({ interaction: { guildId }, args, client }: CommandProps): Promise<CommandReturn> {
+		if (!args[0].role) return 'no role';
+		await this.getCollection(Config.mongo.collections.guildConfigs, client).updateOne(
+			{ guildId },
+			{ $set: { staffRole: args[0].role.id } },
+			{ upsert: true }
+		);
+		return `${args[0].role} is now the staff role`;
 	}
 }

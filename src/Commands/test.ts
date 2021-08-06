@@ -1,12 +1,11 @@
-import BaseCommand, { MessageReturn } from '../Structures/BaseCommand';
+import { BaseCommand, CommandReturn } from '../Structures/Command';
 
 export default class Test extends BaseCommand {
 	constructor() {
-		super({ name: 'testc', description: 'test command', usage: '{p}test', category: 'test' });
-		this.run = this.makeRun;
+		super({ name: 'testc', description: 'testing command' }, { category: 'test', usage: '/test' });
 	}
 
-	makeRun(): MessageReturn {
-		return 'This is a test command';
+	execute(): CommandReturn {
+		return 'hey';
 	}
 }

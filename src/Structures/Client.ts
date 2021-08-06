@@ -1,83 +1,69 @@
-import Discord, { ClientOptions, Collection } from 'discord.js';
-import pkg from 'mongodb';
-import config from '../../config';
-import { readdir } from 'fs';
-import BaseCommand from './BaseCommand';
+import { Client as client, ClientOptions, Collection } from 'discord.js';
+import { readdirSync } from 'fs';
+import { BaseCommand } from './Command';
 import Logger from './Logger';
-const { MongoClient } = pkg;
+import config from '../../config';
+import { MongoClient, Db } from 'mongodb';
 
-export default class Client extends Discord.Client {
-	public mongo: pkg.Db;
-	public configs: { prefixes: { [key: string]: string }; staffroles: { [key: string]: string } };
-	public commands: Collection<string, BaseCommand>;
-	public aliases: Collection<string, string>;
+export default class Client extends client {
+	public mongo: Db;
 	public logger: Logger;
+	public commands: Collection<string, BaseCommand>;
+	public owner: string[];
 
-	constructor(options: ClientOptions = {}) {
+	constructor(options: ClientOptions) {
 		super(options);
-		this.configs = { prefixes: { default: config.prefix }, staffroles: {} };
-		this.commands = new Collection<string, BaseCommand>();
-		this.aliases = new Collection<string, string>();
 		this.logger = new Logger('client');
+		this.commands = new Collection<string, BaseCommand>();
+		this.owner = config.ownerId;
 	}
 
 	init() {
 		this.initMongo();
 		this.loadEvents();
-		this.loadCommands();
+		this.application?.commands.fetch().then(() => {
+			this.loadCommands();
+		});
 	}
 
-	async initMongo() {
-		const client = await MongoClient.connect(config.mongo.uri, { useNewUrlParser: true, useUnifiedTopology: true }).catch(err => {
+	private async initMongo() {
+		const client = await MongoClient.connect(config.mongo.uri).catch(err => {
 			this.logger.warn(err);
 			throw new Error();
 		});
 		this.mongo = client.db(config.mongo.db);
 	}
 
-	async guildConfigs() {
-		for (const guild of this.guilds.cache) {
-			const guildConfig = await this.mongo.collection(config.mongo.collections.guildConfigs).findOne({ guildId: guild[0] });
-			this.configs.prefixes[guild[0]] = guildConfig?.prefix || config.prefix;
-			this.configs.staffroles[guild[0]] = guildConfig?.staffRole;
-		}
-		this.logger.log('Done getting guild prefixes!');
-	}
+	private loadEvents() {
+		const files = readdirSync('./dist/src/Events');
 
-	loadCommands() {
-		readdir('./dist/src/Commands', (err, files) => {
-			if (err) return this.logger.warn(err.message);
-			files.forEach(async file => {
-				if (file.endsWith('.map')) return;
-				if (!file.endsWith('.js')) return this.loadCommand(file);
-				const command: BaseCommand = new (await import(`../Commands/${file}`)).default();
-				this.commands.set(command.help.name, command);
-				if (command.help.aliases) command.help.aliases.forEach(alias => this.aliases.set(alias, command.help.name));
-			});
+		files.forEach(async file => {
+			if (file.endsWith('.map')) return;
+			const eventName = file.split('.')[0];
+			const event = (await import(`../Events/${file}`)).default;
+			this.on(eventName, (...args) => event(this, ...args));
 		});
 	}
 
-	loadCommand(folder: string) {
-		readdir(`./dist/src/Commands/${folder}`, (err, files) => {
-			if (err) return this.logger.warn(err.message);
-			files.forEach(async file => {
-				if (file.endsWith('.map')) return;
-				if (!file.endsWith('.js')) return this.loadCommand(`${folder}/${file}`);
-				const command: BaseCommand = new (await import(`../Commands/${folder}/${file}`)).default();
-				this.commands.set(command.help.name, command);
-			});
+	private loadCommands() {
+		const files = readdirSync(`${__dirname}/../Commands/`, { withFileTypes: true });
+
+		files.forEach(async file => {
+			if (file.name.endsWith('.map')) return;
+			if (file.isDirectory()) return this.loadCommand(file.name);
+			const command: BaseCommand = new (await import(`../Commands/${file.name}`)).default();
+			this.commands.set(command.slashCommand.name, command);
 		});
 	}
 
-	loadEvents() {
-		readdir('./dist/src/events', (err, files) => {
-			if (err) return this.logger.warn(err.message);
-			files.forEach(async file => {
-				if (file.endsWith('.map')) return;
-				const eventName = file.split('.')[0];
-				const event = new (await import(`../events/${file}`)).default(this);
-				this.on(eventName, (...args) => event.run(...args));
-			});
+	private loadCommand(folder: string) {
+		const files = readdirSync(`${__dirname}/../Commands/${folder}`, { withFileTypes: true });
+
+		files.forEach(async file => {
+			if (file.name.endsWith('.map')) return;
+			if (file.isDirectory()) return this.loadCommand(`${folder}/${file.name}`);
+			const command: BaseCommand = new (await import(`../Commands/${folder}/${file.name}`)).default();
+			this.commands.set(command.slashCommand.name, command);
 		});
 	}
 }

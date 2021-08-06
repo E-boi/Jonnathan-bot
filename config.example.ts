@@ -1,3 +1,5 @@
+import { ClientOptions, Intents } from 'discord.js';
+
 interface Config {
 	prefix: string;
 	ownerId: string[];
@@ -12,12 +14,7 @@ interface Config {
 			moneymaker: string;
 		};
 	};
-	clientOptions?: {
-		messageSweepInterval: number;
-		ws: {
-			intents: string[];
-		};
-	};
+	clientOptions: ClientOptions;
 	topgg?: {
 		oauth: string;
 		token: string;
@@ -37,6 +34,9 @@ const config: Config = {
 			currency: 'currency',
 			moneymaker: 'moneymaker',
 		},
+	},
+	clientOptions: {
+		intents: [Intents.FLAGS.GUILDS],
 	},
 };
 

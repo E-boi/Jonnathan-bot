@@ -1,29 +1,30 @@
-import { MessageReturn } from '../../Structures/BaseCommand';
-import RedditCommand from '../../Structures/RedditCommand';
+import { CommandReturn, RedditCommand } from '../../Structures/Command';
 
-export default class meme extends RedditCommand {
+export default class pics extends RedditCommand {
 	constructor() {
-		super({
-			name: 'pics',
-			description: 'gets a image',
-			usage: '{p}pics',
-			reddit: 'https://www.reddit.com/r/pics/hot/.json?limit=100',
-			category: 'reddit',
-		});
-		this.run = this.makeRun;
+		super(
+			{ name: 'pics', description: 'get a pic' },
+			{
+				category: 'reddit',
+				usage: '/pics',
+				reddit: 'https://www.reddit.com/r/pics/hot/.json?limit=100',
+			}
+		);
 	}
 
-	async makeRun(): Promise<MessageReturn> {
+	async execute(): Promise<CommandReturn> {
 		const post = await this.getPost();
 		return {
-			embed: {
-				title: post.title,
-				url: post.link,
-				description: post.description,
-				image: { url: post.image },
-				color: 'RANDOM',
-				footer: { text: `💬 ${post.comments} 👍 ${post.upvotes}` },
-			},
+			embeds: [
+				{
+					title: post.title,
+					url: post.link,
+					description: post.description,
+					image: { url: post.image },
+					color: 'RANDOM',
+					footer: { text: `💬 ${post.comments} 👍 ${post.upvotes}` },
+				},
+			],
 		};
 	}
 }
